@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Input Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-group select, .filter-group span {
+            padding: 5px 10px;
+            font-size: 16px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .response {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-group">
+            <label for="apiInput">API Input</label>
+            <input type="text" id="apiInput" value='{"data":["M","1","334","4","B"]}'>
+        </div>
+
+        <div class="input-group">
+            <button id="submitBtn">Submit</button>
+        </div>
+
+        <div class="filter-group">
+            <label for="filter">Multi Filter</label>
+            <span>Numbers</span>
+        </div>
+
+        <div class="response">
+            <p>Filtered Response</p>
+            <p id="filteredResponse">Numbers: </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const input = JSON.parse(document.getElementById('apiInput').value);
+            (async () => {
+                try{
+                    // POST request
+                    const response = fetch('https://bajajfinservtest.onrender.com/bfhl', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(input)
+                    });
+                    const result = await response.json();
+                    console.log(result)
+                    document.getElementById('filteredResponse').innerHTML = Numbers: ${result}
+                } catch(e){
+                    console.log(e)
+                }
+            })()
+        });
+    </script>
+</body>
+</html>
